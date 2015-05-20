@@ -15,8 +15,13 @@ RUN \
     yum remove -y gcc make tar mariadb-devel && \
     yum clean all
 
-ENV DB_USER=user DB_PASS=password DB_ADDRESS=127.0.0.1
+RUN \
+    echo "putenv('TZ='.date_default_timezone_get());" >> /etc/php.ini && \
+    echo "date.timezone = Asia/Shanghai" >> /etc/php.ini && \
+    rm /etc/localtime && \
+    ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 COPY container-files /
+VOLUME  ["/usr/share/cacti/resource", "/var/lib/cacti/rra"]
 
 EXPOSE 80

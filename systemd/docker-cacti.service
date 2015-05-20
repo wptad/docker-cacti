@@ -1,0 +1,11 @@
+[Unit] 
+Description=docker-cacti 
+After=docker.service 
+Requires=docker.service 
+[Service] 
+TimeoutStartSec=0 
+ExecStartPre=-/usr/bin/docker rm cacti 
+ExecStart=/usr/bin/docker run --name cacti -v /path-to-resource:/usr/share/cacti/resource -v /path-to-cacti-rra:/var/lib/cacti/rra -p 8081:80 --env="DB_ADDRESS=*.*.*.*" --env="DB_USER=admin" --env="DB_PASS=password" my-cacti-url
+ExecStop=/usr/bin/docker kill cacti
+[Install] 
+WantedBy=multi-user.target

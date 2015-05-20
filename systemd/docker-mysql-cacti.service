@@ -1,0 +1,11 @@
+[Unit] 
+Description=docker-mysql-cacti 
+After=docker.service 
+Requires=docker.service 
+[Service] 
+TimeoutStartSec=0 
+ExecStartPre=-/usr/bin/docker rm mysql-cacti 
+ExecStart=/usr/bin/docker run --name mysql-cacti  -v /path-to-mysql-cacti:/var/lib/mysql -p 3306:3306 -e MARIADB_PASS=password  million12/mariadb
+ExecStop=/usr/bin/docker kill mysql-cacti
+[Install] 
+WantedBy=multi-user.target

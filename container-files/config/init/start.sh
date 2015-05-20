@@ -29,3 +29,5 @@ sed -i 's/$DB_PASS/'$DB_PASS'/g' /usr/local/spine/etc/spine.conf
 if [ STATUS=$(mysqlshow -u $DB_USER -h $DB_ADDRESS cacti) != "cacti" ]; then
     mysql -u $DB_USER -h $DB_ADDRESS -e "REPLACE INTO cacti.settings SET name='path_spine', value='/usr/local/spine/bin/spine'";
 fi
+
+chown -Rh cacti:cacti /usr/share/cacti/rra/
